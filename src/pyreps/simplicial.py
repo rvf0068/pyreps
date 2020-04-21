@@ -287,10 +287,12 @@ class SimplicialComplex:
             To compute the matrix associated to the boundary operator, use
             ``SimplicialComplex.matrix_simmetric_representate(p)``.
 
-            >>> n=3
-            >>> G = matching_graph(n)
+            >>> import networkx as nx
+            >>> from pyreps.simplicial import SimplicialComplex
+            >>> from pyreps.graphs import matching_graph
+            >>> G = matching_graph(3)
             >>> sc = SimplicialComplex(G)
-            >>> print(sc.matrix_simmetric_representate(0))
+            >>> sc.matrix_simmetric_representate(0)
             Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 
             .. Note:: This matrix will be so useful to our purposes.
@@ -384,8 +386,10 @@ class SimplicialComplex:
             of the kernel, use ``SimplicialComplex.character_kernel(p,
             Permutation)``.
 
-            >>> n=4
-            >>> G1 = matching_graph(n)
+            >>> import networkx as nx
+            >>> from pyreps.simplicial import SimplicialComplex
+            >>> from pyreps.graphs import matching_graph
+            >>> G1 = matching_graph(4)
             >>> G = clique_graph(G1)
             >>> sc = SimplicialComplex(G)
             >>> print(sc.character_kernel(1,Permutation(0,1)))
