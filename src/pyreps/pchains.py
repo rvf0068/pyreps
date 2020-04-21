@@ -167,7 +167,7 @@ class P_chains:
 
         Args:
             other ( __main__.P_chains): Other p-chain.
-        
+
         Returns
             bool: The return value. True for success, False otherwise.
 
