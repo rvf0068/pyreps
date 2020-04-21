@@ -388,13 +388,14 @@ class SimplicialComplex:
 
             >>> import networkx as nx
             >>> from pyreps.simplicial import SimplicialComplex
-            >>> from pyreps.graphs import matching_graph
+            >>> from pyreps.graphs import matching_graph, clique_graph
+            >>> from sympy.combinatorics import Permutation
             >>> G1 = matching_graph(4)
             >>> G = clique_graph(G1)
             >>> sc = SimplicialComplex(G)
-            >>> print(sc.character_kernel(1,Permutation(0,1)))
+            >>> sc.character_kernel(1, Permutation(0,1))
             0
-            >>> print(sc.character_kernel(1,Permutation(0,1,2,3)))
+            >>> sc.character_kernel(1, Permutation(0,1,2,3))
             0
 
         """
@@ -470,12 +471,14 @@ class SimplicialComplex:
             of the image, use
             ``SimplicialComplex.character_image(p,Permutation)``.
 
-            >>> n=5
-            >>> G = matching_graph(n)
+            >>> from pyreps.simplicial import SimplicialComplex
+            >>> from pyreps.graphs import matching_graph
+            >>> from sympy.combinatorics import Permutation
+            >>> G = matching_graph(5)
             >>> sc = SimplicialComplex(G)
-            >>> print(sc.character_image(1,Permutation(0,1)))
+            >>> sc.character_image(1, Permutation(0,1))
             3
-            >>> print(sc.character_image(1,Permutation()))
+            >>> sc.character_image(1, Permutation())
             9
 
         """
