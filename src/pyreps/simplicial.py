@@ -293,7 +293,10 @@ class SimplicialComplex:
             >>> G = matching_graph(3)
             >>> sc = SimplicialComplex(G)
             >>> sc.matrix_simmetric_representate(0)
-            Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+            Matrix([
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]])
 
             .. Note:: This matrix will be so useful to our purposes.
 
@@ -537,13 +540,15 @@ class SimplicialComplex:
             To get the character of the pth homology use
             ``SimplicialComplex.character_p_homology(p, Permutation)``.
 
-            >>> n=6
-            >>> G1 = matching_graph(n)
+            >>> from pyreps.simplicial import SimplicialComplex
+            >>> from pyreps.graphs import matching_graph, clique_graph
+            >>> from sympy.combinatorics import Permutation
+            >>> G1 = matching_graph(6)
             >>> G = clique_graph(G1)
             >>> sc = SimplicialComplex(G)
-            >>> print(sc.character_p_homology(1,Permutation(0,1)))
+            >>> sc.character_p_homology(1, Permutation(0, 1))
             0
-            >>> print(sc.character_p_homology(1,Permutation()))
+            >>> sc.character_p_homology(1, Permutation())
             16
 
             ..Note:: The funcion only is the subtract of the
@@ -568,14 +573,17 @@ class SimplicialComplex:
             To get the reduce homologies of the simplicial complex by a
             graph, use ``SimplicialComplex.specific_function(n)``.
 
-            >>> n=4
+            >>> from pyreps.simplicial import SimplicialComplex
+            >>> from pyreps.graphs import matching_graph
+            >>> from sympy.combinatorics import Permutation
+            >>> n = 4
             >>> G1 = matching_graph(n)
             >>> G = clique_graph(G1)
             >>> sc1 = SimplicialComplex(G1)
-            >>> print(sc1.specific_function(n))
+            >>> sc1.specific_function(n)
             {0: {(4,): 1, (1, 1, 1, 1): 0, (2, 1, 1): 0, (2, 2): 1, (3, 1): 0}, 1: {(4,): 0, (1, 1, 1, 1): 0, (2, 1, 1): 0, (2, 2): 0, (3, 1): 0}}
             >>> sc2 = SimplicialComplex(G)
-            >>> print(sc2.specific_function(n))
+            >>> sc2.specific_function(n)
             {0: {(4,): 1, (1, 1, 1, 1): 0, (2, 1, 1): 0, (2, 2): 1, (3, 1): 0}}
 
         """

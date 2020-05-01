@@ -24,6 +24,7 @@ def tuple_sorted(a):
         this function can do it, below is showing examples of
         both functions:
 
+        >>> from pyreps.utilities import tuple_sorted
         >>> a1 = ((6,5),(1,0),(3,2))
         >>> a2 = (((4,2),(1,0),(5,3)),((2,3),(1,0),(6,4)))
         >>> sorted(a1)
@@ -62,14 +63,15 @@ def tuple_permutation(v, P):
         To do act the Permutation on the tuple use
         ``tuple_permutation(tuple)``.
 
-        >>> a1 = (0,1,2,3,4)
-        >>> a2 = ((2,4),(1,5),(3,0))
-        >>> a3 = (((0,1),(2,4),(3,5)),((0,5),(1,3),(2,4)))
-        >>> tuple_permutation(a1,Permutation(0,1,2))
+        >>> from pyreps.utilities import tuple_permutation
+        >>> a1 = (0, 1, 2, 3, 4)
+        >>> a2 = ((2, 4), (1, 5), (3, 0))
+        >>> a3 = (((0, 1), (2, 4), (3, 5)), ((0, 5), (1, 3), (2, 4)))
+        >>> tuple_permutation(a1,Permutation(0, 1, 2))
         (1, 2, 0, 3, 4)
-        >>> tuple_permutation(a2,Permutation(1,3))
+        >>> tuple_permutation(a2,Permutation(1, 3))
         ((2, 4), (3, 5), (1, 0))
-        >>> tuple_permutation(a3,Permutation(0,1)(2,3))
+        >>> tuple_permutation(a3,Permutation(0, 1)(2, 3))
         (((1, 0), (3, 4), (2, 5)), ((1, 5), (0, 2), (3, 4)))
 
         .. Note:: The function return other tuple that represent
@@ -113,13 +115,14 @@ def eq_elements(a, b):
     Examples:
         To see if two tuples are equal use ``eq_elements``.
 
-        >>> a1 = ((0,1),(2,3),(5,6))
-        >>> b1 = ((0,3),(2,1),(5,6))
-        >>> a2 = ((0,1),(2,3),(5,6))
-        >>> b2 = ((6,5),(1,0),(3,2))
-        >>> print(eq_elements(a1,b1))
+        >>> from pyreps.utilities import eq_elements
+        >>> a1 = ((0, 1), (2, 3), (5, 6))
+        >>> b1 = ((0, 3), (2, 1), (5, 6))
+        >>> a2 = ((0, 1), (2, 3), (5, 6))
+        >>> b2 = ((6, 5), (1, 0), (3, 2))
+        >>> eq_elements(a1, b1)
         False
-        >>> print(eq_elements(a2,b2))
+        >>> eq_elements(a2, b2)
         True
 
     """
@@ -154,13 +157,14 @@ def orientation_function(a, b, p):
     Examples:
         To see if two tuples are equal use ``eq_elements``.
 
-        >>> a1 = (((0,1),(2,3),(4,6)),((0,1),(2,4),(3,5)))
-        >>> b1 = (((4,2),(1,0),(5,3)),((2,3),(1,0),(6,4)))
-        >>> a2 = ((0,1),(2,3),(5,6))
-        >>> b2 = ((6,5),(1,0),(3,2))
-        >>> print(orientation_function(a1,b1,1))
+        >>> from pyreps.utilities import orientation_function
+        >>> a1 = (((0, 1), (2, 3), (4, 6)), ((0, 1), (2, 4), (3, 5)))
+        >>> b1 = (((4, 2), (1, 0), (5, 3)), ((2, 3), (1, 0), (6, 4)))
+        >>> a2 = ((0, 1), (2, 3), (5, 6))
+        >>> b2 = ((6, 5), (1, 0), (3, 2))
+        >>> orientation_function(a1, b1, 1)
         False
-        >>> print(orientation_function(a2,b2,2))
+        >>> orientation_function(a2, b2, 2)
         True
 
         .. Note:: For ``a1`` and ``b1`` the function receive
@@ -194,14 +198,16 @@ def boundary_op_n(v):
     Examples:
         To use of the boundary operator, write ``boundary_op_n``.
 
-        >>> w = P_chains([(0,),(1,),(2,),(3,)],[1,1,1,1])
-        >>> v = P_chains([(0,1,2),(0,1,3),(0,2,3),(1,2,3)],[1,1,1,1])
+        >>> from pyreps.pchains import P_chains
+        >>> from pyreps.utilities import boundary_op_n
+        >>> w = P_chains([(0,), (1,), (2,), (3,)], [1, 1, 1, 1])
+        >>> v = P_chains([(0, 1, 2), (0, 1, 3), (0, 2, 3), (1, 2, 3)], [1, 1, 1, 1])
         >>> u = boundary_op_n(v)
-        >>> print(boundary_op_n(w).dic)
+        >>> boundary_op_n(w).dic
         {}
-        >>> print(u.dic)
+        >>> u.dic
         {(1, 2): 2, (0, 2): 0, (0, 1): 2, (1, 3): 0, (0, 3): -2, (2, 3): 2}
-        >>> print(boundary_op_n(u).dic)
+        >>> boundary_op_n(u).dic
         {(2,): 0, (1,): 0, (0,): 0, (3,): 0}
 
         .. Note:: Above w, v are the 0-simplex, 2-simplex of the tetrahedron
