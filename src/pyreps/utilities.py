@@ -261,11 +261,13 @@ def nullspace(A):
     Examples:
         To find the nullspace of a matrix, use ``nullspace(A)``.
 
+        >>> from sympy.matrices import Matrix
+        >>> from pyreps.utilities import nullspace
         >>> M1 = Matrix([[2, 4, 6, 6], [8, 20, 0, 1], [5, 0, 3, 2]])
-        >>> M2 = Matrix([[1,0,0],[0,1,0],[0,0,1],[0,0,-1],[0,-1,0],[-1,0,0]])
-        >>> print(nullspace(M1))
+        >>> M2 = Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, -1], [0, -1, 0], [-1, 0, 0]])
+        >>> nullspace(M1)
         [[3/16, -1/8, -47/48, 1]]
-        >>> print(nullspace(M2))
+        >>> nullspace(M2)
         [array([0, 0, 0])]
 
         .. Note:: Essentially the function only obtain the nullspace
@@ -301,13 +303,15 @@ def columnspace(A):
     Examples:
         To find the columnspace of a matrix, use ``columnspace(A)``.
 
+        >>> from sympy.matrices import Matrix
+        >>> from pyreps.utilities import nullspace, columnspace
         >>> M1 = Matrix([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
-        >>> M2 = Matrix([[1,0,0],[0,1,0],[0,0,1],[0,0,-1],[0,-1,0],[-1,0,0]])
-        >>> print(columnspace(M1))
+        >>> M2 = Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, -1], [0, -1, 0], [-1, 0, 0]])
+        >>> columnspace(M1)
         [array([0, 0, 0])]
-        >>> print(nullspace(M2))
+        >>> nullspace(M2)
         [array([0, 0, 0])]
-        >>> print(columnspace(M2))
+        >>> columnspace(M2)
         [[1, 0, 0, 0, 0, -1], [0, 1, 0, 0, -1, 0], [0, 0, 1, -1, 0, 0]]
 
         .. Note:: Essentially the function only obtain the columnspace
@@ -347,8 +351,10 @@ def Reduce(N):
         To use this functio use ``Reduce(Matrix)``. We will use the help of the
         function ``rref`` to verify that the result is right.
 
-        >>> M=Matrix([[-1, -1, -1, -1, 0, 0, 0, 0],[ 1, 0, 0, 0, -1, -1, 0, 0],[ 0, 1, 0, 0, 1, 0, -1, -1],[ 0, 0, 1, 0, 0, 1, 1, 0],[ 0, 0, 0, 1, 0, 0, 0, 1]])
-        >>> print(M.rref())
+        >>> from sympy.matrices import Matrix
+        >>> from pyreps.utilities import Reduce
+        >>> M = Matrix([[-1, -1, -1, -1, 0, 0, 0, 0], [ 1, 0, 0, 0, -1, -1, 0, 0],[ 0, 1, 0, 0, 1, 0, -1, -1], [ 0, 0, 1, 0, 0, 1, 1, 0], [ 0, 0, 0, 1, 0, 0, 0, 1]])
+        >>> M.rref()
         (Matrix([
         [1, 0, 0, 0, -1, -1,  0,  0],
         [0, 1, 0, 0,  1,  0, -1, -1],
@@ -356,7 +362,7 @@ def Reduce(N):
         [0, 0, 0, 1,  0,  0,  0,  1],
         [0, 0, 0, 0,  0,  0,  0,  0]]), (0, 1, 2, 3))
         >>> P = Reduce(M)
-        >>> print(P)
+        >>> P
         (Matrix([
         [ 0,  1,  0,  0, 0],
         [ 0,  0,  1,  0, 0],
@@ -448,13 +454,15 @@ def permutation_in_simplex_test(vec, P):
         [v_{0},...,v_{p}] (important step will be explain according with the
         theory):
 
-        >>> u1 = P_chains([(0,1,2,3)],[1])
-        >>> u2 = P_chains([(0,2,1,3)],[1])
+        >>> from pyreps.pchains import P_chains
+        >>> from pyreps.utilities import boundary_op_n
+        >>> u1 = P_chains([(0, 1, 2, 3)], [1])
+        >>> u2 = P_chains([(0, 2, 1, 3)], [1])
         >>> bu1 = boundary_op_n(u1).dic
         >>> bu2 = boundary_op_n(u2).dic
-        >>> print(bu1)
+        >>> bu1
         {(1, 2, 3): 1, (0, 2, 3): -1, (0, 1, 3): 1, (0, 1, 2): -1}
-        >>> print(bu2)
+        >>> bu2
         {(1, 2, 3): -1, (0, 1, 3): -1, (0, 2, 3): 1, (0, 1, 2): 1}
 
         ..Note:: The p-simplex in u1 and u2 differ by a sign. And we could
@@ -465,36 +473,39 @@ def permutation_in_simplex_test(vec, P):
         (where rho = Permutation ``P``). For this we will use some p-simplices
         associated with a graph.
 
-        >>> n=5
-        >>> G = nx.complete_graph(n)
+        >>> from pyreps.simplicial import SimplicialComplex
+        >>> from pyreps.utilities import boundary_op_n, permutation_in_simplex_test
+        >>> G = nx.complete_graph(5)
         >>> sc = SimplicialComplex(G)
         >>> sigma = sc.basis_group_oriented_p_chains(1)
-        >>> print(sigma.dic)
+        >>> sigma.dic
         {(0, 1): 1, (0, 2): 1, (0, 3): 1, (0, 4): 1, (1, 2): 1, (1, 3): 1, (1, 4): 1, (2, 3): 1, (2, 4): 1, (3, 4): 1}
-        >>> bo_sigma=boundary_op_n(sigma)
-        >>> rho_bo_sigma=permutation_in_simplex_test(bo_sigma,Permutation(0,1))
-        >>> print(rho_bo_sigma.dic)
+        >>> bo_sigma = boundary_op_n(sigma)
+        >>> rho_bo_sigma = permutation_in_simplex_test(bo_sigma, Permutation(0, 1))
+        >>> rho_bo_sigma.dic
         {(0,): -2, (1,): -4, (2,): 0, (3,): 2, (4,): 4}
-        >>> rho_sigma=permutation_in_simplex_test(sigma,Permutation(0,1))
+        >>> rho_sigma = permutation_in_simplex_test(sigma, Permutation(0, 1))
         >>> bo_rho_sigma=boundary_op_n(rho_sigma)
-        >>> print(bo_rho_sigma.dic)
+        >>> bo_rho_sigma.dic
         {(1,): -4, (0,): -2, (2,): 0, (3,): 2, (4,): 4}
-        >>> print(rho_bo_sigma == bo_rho_sigma)
+        >>> rho_bo_sigma == bo_rho_sigma
         True
 
         ..Note:: Then for this example the result is the same.
 
         And for the second propertie:
 
-        >>> sigma1 = P_chains([(0,1,2)],[1])
-        >>> sigma2 = P_chains([(0,1,2)],[-1])
+        >>> from pyreps.pchains import P_chains
+        >>> from pyreps.utilities import boundary_op_n
+        >>> sigma1 = P_chains([(0, 1, 2)], [1])
+        >>> sigma2 = P_chains([(0, 1, 2)], [-1])
         >>> w1 = boundary_op_n(sigma1)
         >>> w2 = boundary_op_n(sigma2)
-        >>> print(w1.dic)
+        >>> w1.dic
         {(1, 2): 1, (0, 2): -1, (0, 1): 1}
-        >>> print(w2.dic)
+        >>> w2.dic
         {(1, 2): -1, (0, 2): 1, (0, 1): -1}
-        >>> print(w1 == w2.mul_esc(-1)) #Multiply by -1.
+        >>> w1 == w2.mul_esc(-1) #Multiply by -1.
         True
 
         ..Note:: The simplices differ by the sign, and for this example is true
