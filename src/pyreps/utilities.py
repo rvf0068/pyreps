@@ -52,7 +52,7 @@ def tuple_permutation(v, P):
     """Determines the orientation of ``b`` taken the orientation of ``a`` positive.
 
     Args:
-        a (tuple): The tuple which will under the Permunation ``p``.
+        a (tuple): The tuple which will under the Permutation ``p``.
         p (<class 'sympy.combinatorics.permutations.Permutation'>): The
         Permutation.
     Returns:
@@ -436,7 +436,7 @@ def permutation_in_simplex_test(vec, P):
 
     Examples:
         To see how a permutation act on a p-simplex, use
-        ``permutation_in_simplex_test(SimplicialComplex, Permuation)``.
+        ``permutation_in_simplex_test(SimplicialComplex, Permutation)``.
         Also we must check that the boundary operator on a p-simplex
         (partial_{p}) is well-defined and that (if ``p-simplex`` := sigma)
         partial_{p}(-sigma) = - partial_{p}(sigma). For this purpose, it
@@ -548,11 +548,10 @@ def partitions_list(n):
         To form all the partitions for the integer ``n``, use
         ``list_partitions``.
 
-        >>> v = partitions_list(3)
-        >>> u = partitions_list(4)
-        >>> print(v)
+        >>> from pyreps.utilities import partitions_list
+        >>> partitions_list(3)
         [[3], [1, 1, 1], [2, 1]]
-        >>> print(u)
+        >>> partitions_list(4)
         [[4], [1, 1, 1, 1], [2, 1, 1], [2, 2], [3, 1]]
 
 
@@ -581,9 +580,13 @@ def form_matrix_yt(w):
         To form the matrix that represent the character table of the
         symmetric group, use ``form_matrix_yt``.
 
+        >>> from pyreps.utilities import partitions_list, form_matrix_yt
         >>> v = partitions_list(3)
-        >>> print(form_matrix_yt(v))
-        Matrix([[1, 1, 1], [1, 1, -1], [-1, 2, 0]])
+        >>> form_matrix_yt(v)
+        Matrix([
+        [ 1, 1,  1],
+        [ 1, 1, -1],
+        [-1, 2,  0]])
 
         .. Note:: The function need a list of the partitions for
         ``n``, then is used the function ``partitions_list.``
@@ -610,20 +613,21 @@ def make_permutation(partition):
         For find a representate of a conjugacy class of s simmetric group
         use ``make_permutation(partition)``.
 
-        >>> print(make_permutation([5]))
-        (0 1 2 3 4)
-        >>> print(make_permutation([1,1,1,1,1]))
-        ()
-        >>> print(make_permutation([2,1,1,1]))
-        (4)(0 1)
-        >>> print(make_permutation([2,2,1]))
-        (4)(0 1)(2 3)
-        >>> print(make_permutation([3,1,1]))
-        (4)(0 1 2)
-        >>> print(make_permutation([3,2]))
-        (0 1 2)(3 4)
-        >>> print(make_permutation([4,1]))
-        (4)(0 1 2 3)
+        >>> from pyreps.utilities import make_permutation
+        >>> make_permutation([5])
+        Permutation(0, 1, 2, 3, 4)
+        >>> make_permutation([1, 1, 1, 1, 1])
+        Permutation()
+        >>> make_permutation([2, 1, 1, 1])
+        Permutation(4)(0, 1)
+        >>> make_permutation([2, 2, 1])
+        Permutation(4)(0, 1)(2, 3)
+        >>> make_permutation([3, 1, 1])
+        Permutation(4)(0, 1, 2)
+        >>> make_permutation([3, 2])
+        Permutation(0, 1, 2)(3, 4)
+        >>> make_permutation([4, 1])
+        Permutation(4)(0, 1, 2, 3)
 
     """
     P = Permutation()
@@ -656,15 +660,16 @@ def size_conjugacy_class(partition, n):
         For find the number of elements of the conjugacy class of a
         symmetric group use ``size_conjugacy_class(partition,n)``.
 
-        >>> print(size_conjugacy_class([4], 4))
+        >>> from pyreps.utilities import size_conjugacy_class
+        >>> size_conjugacy_class([4], 4)
         6
-        >>> print(size_conjugacy_class([1,1,1,1], 4))
+        >>> size_conjugacy_class([1,1,1,1], 4)
         1
-        >>> print(size_conjugacy_class([2,1,1], 4))
+        >>> size_conjugacy_class([2,1,1], 4)
         6
-        >>> print(size_conjugacy_class([2,2], 4))
+        >>> size_conjugacy_class([2,2], 4)
         3
-        >>> print(size_conjugacy_class([3,1], 4))
+        >>> size_conjugacy_class([3,1], 4)
         8
 
         .. Note:: The examples showed are all the partition for the case
