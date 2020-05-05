@@ -75,8 +75,8 @@ def tuple_permutation(v, P):
         (((1, 0), (3, 4), (2, 5)), ((1, 5), (0, 2), (3, 4)))
 
         .. Note:: The function return other tuple that represent
-        how the Permutation is acting in a natural way in the origin
-        tuple.
+                  how the Permutation is acting in a natural way in the origin
+                  tuple.
 
     """
     u = []
@@ -168,10 +168,10 @@ def orientation_function(a, b, p):
         True
 
         .. Note:: For ``a1`` and ``b1`` the function receive
-        the integer ``1``, and in the case of ``a2`` and ``b2``
-        receive ``2`` to indentify the dimension of the
-        p-simplex, in the practice the class determine this
-        number.
+                  the integer ``1``, and in the case of ``a2`` and ``b2``
+                  receive ``2`` to indentify the dimension of the
+                  p-simplex, in the practice the class determine this
+                  number.
 
     """
     if (p == 0):
@@ -211,11 +211,11 @@ def boundary_op_n(v):
         {(2,): 0, (1,): 0, (0,): 0, (3,): 0}
 
         .. Note:: Above w, v are the 0-simplex, 2-simplex of the tetrahedron
-           respectively, if v is a p-simplex we denoted the boundary_op_n(v) =
-           partial_{p}(v), the theory
-            said that partial_{p-1}(partial_{p}(v)) = 0, that was checked in
-            the ``boundary_op_n(u)``. In the case when you use 0-simplex, the
-            result is a empty dictionary like in ``boundary_op_n(w)``.
+                  respectively, if v is a p-simplex we denoted the boundary_op_n(v) =
+                  partial_{p}(v), the theory
+                  said that partial_{p-1}(partial_{p}(v)) = 0, that was checked in
+                  the ``boundary_op_n(u)``. In the case when you use 0-simplex, the
+                  result is a empty dictionary like in ``boundary_op_n(w)``.
 
    """
     p = len(list(v.dic.keys())[0]) - 1
@@ -271,8 +271,8 @@ def nullspace(A):
         [array([0, 0, 0])]
 
         .. Note:: Essentially the function only obtain the nullspace
-        with the function ``A.nullspace()`` and returns the trivial kernel
-        if ``A.nullspace()`` is a emtpy list.
+                  with the function ``A.nullspace()`` and returns the trivial kernel
+                  if ``A.nullspace()`` is a emtpy list.
 
     """
     u = A.nullspace()
@@ -315,11 +315,11 @@ def columnspace(A):
         [[1, 0, 0, 0, 0, -1], [0, 1, 0, 0, -1, 0], [0, 0, 1, -1, 0, 0]]
 
         .. Note:: Essentially the function only obtain the columnspace
-        with the function ``A.columnspace()`` and returns the trivial image
-        if ``A.columnspace()`` is a emtpy list. In the example ``M2`` is noted
-        that is right that:
-        ``dimension(nullspace(A))``+``dimension(columnspace(A))`` = ``number of
-        columns``.
+                  with the function ``A.columnspace()`` and returns the trivial image
+                  if ``A.columnspace()`` is a emtpy list. In the example ``M2`` is noted
+                  that is right that:
+                  ``dimension(nullspace(A))``+``dimension(columnspace(A))`` = ``number of
+                  columns``.
 
     """
     u = A.columnspace()
@@ -376,10 +376,10 @@ def Reduce(N):
         [0, 0, 0, 0,  0,  0,  0,  0]]))
 
         ..Note:: The first matrix is the row reduced form, and the second
-            is a matrix which if is multiplied the left size to the
-            origin matrix, then we obtain the row reduced form, like below.
-        print(P[0]*M == (M.rref())[0])
-        True
+                 is a matrix which if is multiplied the left size to the
+                 origin matrix, then we obtain the row reduced form, like below.
+                 print(P[0]*M == (M.rref())[0])
+                 True
 
     """
     M = N.copy()
@@ -424,7 +424,7 @@ def Reduce(N):
 
 
 def permutation_in_simplex_test(vec, P):
-    """Returns a simplex under a permutation.
+    r"""Returns a simplex under a permutation.
 
     Args:
         vec ( __main__.P_chains): A p-chain which the permutation will act.
@@ -442,13 +442,14 @@ def permutation_in_simplex_test(vec, P):
         partial_{p}(-sigma) = - partial_{p}(sigma). For this purpose, it
         suffices to show that the right-hand side of:
 
-            partial_{p}(sigma) =
-                                 = partial_{p}([v_{0},...,v_{p}]) =
-                                 = sum_{i=0}^{p}(-1)^{i}[v_{0},...,v_{i},...
-                                   v_{p}].
+        .. math::
 
-                (where v_{i} means that the vertex v_{i} is to be deleted
-                from the array)
+                  \partial_{p}(\sigma) = \partial_{p}([v_{0},...,v_{p}]) =
+                  = \sum_{i=0}^{p}(-1)^{i}[v_{0},...,v_{i},...
+                  v_{p}].
+
+        (where v_{i} means that the vertex v_{i} is to be deleted
+        from the array)
 
         changes sign if we exchange two adjacent vertices in the array
         [v_{0},...,v_{p}] (important step will be explain according with the
@@ -465,8 +466,8 @@ def permutation_in_simplex_test(vec, P):
         >>> bu2
         {(1, 2, 3): -1, (0, 1, 3): -1, (0, 2, 3): 1, (0, 1, 2): 1}
 
-        ..Note:: The p-simplex in u1 and u2 differ by a sign. And we could
-             see that the result changes sign, like is wanted.
+        .. Note:: The p-simplex in u1 and u2 differ by a sign. And we could
+                  see that the result changes sign, like is wanted.
 
         Now se must check that partial_{p}(rho(sigma)) =
         rho(partial_{p}(sigma))
@@ -491,7 +492,7 @@ def permutation_in_simplex_test(vec, P):
         >>> rho_bo_sigma == bo_rho_sigma
         True
 
-        ..Note:: Then for this example the result is the same.
+        .. Note:: Then for this example the result is the same.
 
         And for the second propertie:
 
@@ -508,9 +509,9 @@ def permutation_in_simplex_test(vec, P):
         >>> w1 == w2.mul_esc(-1) #Multiply by -1.
         True
 
-        ..Note:: The simplices differ by the sign, and for this example is true
-            that partial_{p}(-sigma) = - partial_{p}(sigma)
-            like is wanted, and for all our cases the previous is true.
+        .. Note:: The simplices differ by the sign, and for this example is true
+                  that partial_{p}(-sigma) = - partial_{p}(sigma)
+                  like is wanted, and for all our cases the previous is true.
 
     """
     s = P_chains([], [])
@@ -589,7 +590,7 @@ def form_matrix_yt(w):
         [-1, 2,  0]])
 
         .. Note:: The function need a list of the partitions for
-        ``n``, then is used the function ``partitions_list.``
+                  ``n``, then is used the function ``partitions_list.``
 
     """
     M = zeros(len(w), len(w))
@@ -673,8 +674,8 @@ def size_conjugacy_class(partition, n):
         8
 
         .. Note:: The examples showed are all the partition for the case
-        4, and the sum of the results is 24 that is the cardinality of the
-        simmetric group of 4.
+                  4, and the sum of the results is 24 that is the cardinality of the
+                  simmetric group of 4.
 
     """
     aux1 = 1

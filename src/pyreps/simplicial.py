@@ -111,8 +111,8 @@ class SimplicialComplex:
             []
 
             .. Note:: If there are not faces of dimension p,
-            the method return a empty list like in
-            ``sc.p_simplex(5)``.
+                      the method return a empty list like in
+                      ``sc.p_simplex(5)``.
 
         """
 
@@ -188,8 +188,8 @@ class SimplicialComplex:
             group.
 
             .. Note:: To every element is given the coefficiente ``1``
-            by default, this is because the p-simplex are sorted with the
-            lexicographical order, i.e, this orientation is taken positive.
+                      by default, this is because the p-simplex are sorted with the
+                      lexicographical order, i.e, this orientation is taken positive.
 
         Raises:
             AttributeError: If p is lower than zero or bigger than the
@@ -208,7 +208,7 @@ class SimplicialComplex:
             {((0, 1),): 1, ((0, 2),): 1, ((1, 2),): 1}
 
              .. Note:: We use the function ``matching_graph`` which
-             will be explain after.
+                       will be explain after.
 
         """
         if ((p < 0) or (p > self.dimension())):
