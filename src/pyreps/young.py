@@ -296,7 +296,7 @@ class YoungTableaux:
         return He
 
     def CMNR(self):
-        """A method to calculate irreducible character values ​​through the
+        """A method to calculate irreducible character values through the
            Murnaghan-Nakayama rule.
 
         Returns:
