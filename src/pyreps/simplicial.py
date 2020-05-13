@@ -14,134 +14,98 @@ from pyreps.utilities import tuple_sorted, tuple_permutation, eq_elements, \
 
 
 class SimplicialComplex:
-    """A class to make simplicial complex asociated with a graph.
+    """Class for the simplicial complex asociated with a graph.
 
-    ...
+    Parameters
+    ==========
 
-    Attributes:
-        G (networkx.classes.graph.Graph): A graph used to build a simplicial
-        complex.
+    G : A Networkx graph
+        The graph used to build a simplicial complex.
+
+    Examples
+    ========
+
+    >>> import networkx as nx
+    >>> from pyreps.simplicial import SimplicialComplex
+    >>> G = nx.complete_graph(5)
+    >>> sc = SimplicialComplex(G)
+    >>> sc.vertices
+    [0, 1, 2, 3, 4]
 
     """
 
     def __init__(self, G):
-        '''Saves the graph and their nodes.
-
-        Args:
-            G (networkx.classes.graph.Graph): A graph used to build a
-            simplicial complex.
-
-        Raises:
-            AttributeError: If G is not a graph.
-
-        Examples:
-            To make a simplicial complex asociated with a graph,
-            use the ``SimplicialComplex`` class. We need a graph G.
-
-            >>> import networkx as nx
-            >>> from pyreps.simplicial import SimplicialComplex
-            >>> G = nx.complete_graph(5)
-            >>> sc = SimplicialComplex(G)
-            >>> sc.vertices
-            [0, 1, 2, 3, 4]
-
-
-        '''
         self.G = G
         self.vertices = []
         for x in self.G.nodes():
             self.vertices.append(x)
 
     def faces(self):
-        """Makes the faces of a simplicial complex.
+        """The faces of a simplicial complex.
 
-        A simplicial complex must contains every face of a simplex
-        and the intersection of any two simplexes of G is a face of
-        each of them.
+        Returns a list of the faces of a simplex. The faces are sorted
+        by their dimension.
 
-        Returns:
-            list: A list of the faces of a simplex.
+        Examples
+        ========
 
-        Examples:
-            To create the faces of a simplical complex use,
-            ``SimplicialComplex.faces()``.
-
-            >>> import networkx as nx
-            >>> from pyreps.simplicial import SimplicialComplex
-            >>> G = nx.complete_graph(3)
-            >>> sc = SimplicialComplex(G)
-            >>> sc.faces()
-            [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)]
-
-            .. Note:: The faces are sorted by their dimension.
-
-            """
-
-        faceset = []
-        for face in list(nx.enumerate_all_cliques(self.G)):
-            faceset.append(tuple(face))
-        return faceset
-
-    def p_simplex(self, p):
-        """Creates a list of the faces of a simplex with dimension p.
-
-        Args:
-            p (int): The dimension of the faces.
-
-        Returns:
-            list: A list of the faces of a simplex with dimension p.
-
-        Examples:
-            The p-simplices are done with
-            "SimplicialComplex.p_simplex(p)".
-
-            >>> import networkx as nx
-            >>> from pyreps.simplicial import SimplicialComplex
-            >>> G = nx.complete_graph(3)
-            >>> sc = SimplicialComplex(G)
-            >>> sc.faces()
-            [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)]
-            >>> sc.p_simplex(0)
-            [(0,), (1,), (2,)]
-            >>> sc.p_simplex(2)
-            [(0, 1, 2)]
-            >>> sc.p_simplex(1)
-            [(0, 1), (0, 2), (1, 2)]
-            >>> sc.p_simplex(5)
-            []
-
-            .. Note:: If there are not faces of dimension p,
-                      the method return a empty list like in
-                      ``sc.p_simplex(5)``.
+        >>> import networkx as nx
+        >>> from pyreps.simplicial import SimplicialComplex
+        >>> G = nx.complete_graph(3)
+        >>> sc = SimplicialComplex(G)
+        >>> sc.faces()
+        [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)]
 
         """
+        return [tuple(clique) for clique in nx.enumerate_all_cliques(self.G)]
 
-        return list(filter(lambda face: (len(face) == p+1), self.faces()))
+    def p_simplex(self, p):
+        """List of the faces of a simplex with dimension ``p``.
+
+        Parameters
+        ==========
+
+        p : int
+            The dimension
+
+        Examples
+        ========
+
+        >>> import networkx as nx
+        >>> from pyreps.simplicial import SimplicialComplex
+        >>> G = nx.complete_graph(3)
+        >>> sc = SimplicialComplex(G)
+        >>> sc.faces()
+        [(0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)]
+        >>> sc.p_simplex(0)
+        [(0,), (1,), (2,)]
+        >>> sc.p_simplex(2)
+        [(0, 1, 2)]
+        >>> sc.p_simplex(1)
+        [(0, 1), (0, 2), (1, 2)]
+        >>> sc.p_simplex(5)
+        []
+
+        """
+        return [face for face in self.faces() if len(face) == p+1]
 
     def dimension(self):
-        """Gives the dimension of a simplicial complex.
+        """The dimension of a simplicial complex.
 
-        Returns:
-            a - 1 (int): The dimension of the simplicial complex.
+        Examples
+        ========
 
-        Raises:
-            Return ``-1`` if the graph is empty.
-
-        Examples:
-            To use the method dimension write
-            ``SimplicialComplex.dimension()``.
-
-            >>> import networkx as nx
-            >>> from pyreps.simplicial import SimplicialComplex
-            >>> G = nx.petersen_graph()
-            >>> sc = SimplicialComplex(G)
-            >>> sc.dimension()
-            1
+        >>> import networkx as nx
+        >>> from pyreps.simplicial import SimplicialComplex
+        >>> G = nx.petersen_graph()
+        >>> sc = SimplicialComplex(G)
+        >>> sc.dimension()
+        1
 
         """
         a = 0
         for x in self.faces():
-            if (len(x) > a):
+            if len(x) > a:
                 a = len(x)
         return a-1
 

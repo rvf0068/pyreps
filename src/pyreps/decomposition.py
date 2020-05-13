@@ -178,7 +178,7 @@ def unitary_representation(G, d):
         A1 = sp.expand(A1)
     V = MTS(A)
     M = {}
-    for g in list(G.elements):
+    for g in list(G.generate()):
         M[g] = sp.ImmutableMatrix((V.inv())*d.map[g]*V)
     return MatrixRepresentation(M, G, n)
 
@@ -273,7 +273,7 @@ def reduce(G, d):
         U = P
         for a in au:
             d1 = {}
-            for g in list(G.elements):
+            for g in list(G.generate()):
                 d1[g] = sp.ImmutableMatrix((P.inv()*d.map[g]*P)[e:a+1, e:a+1])
             U = U*blockI(reduce(G, MatrixRepresentation(d1, G, (a+1-e))), b, e)
             e = a+1
