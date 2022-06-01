@@ -28,6 +28,7 @@ class MatrixRepresentation:
         self.map = d
         self.group = G
         self.degree = n
+        self._elements = tuple(G.generate())
 
     def character(self):
         """Character of the representation
@@ -45,7 +46,7 @@ class MatrixRepresentation:
         {Permutation(2): 6, Permutation(0, 1, 2): 0, Permutation(0, 2, 1): 0, Permutation(1, 2): 0, Permutation(2)(0, 1): 0, Permutation(0, 2): 0}
 
        """
-        return {g: self.map[g].trace() for g in self.group.generate()}
+        return {g: self.map[g].trace() for g in self._elements}
 
     def is_unitary(self):
         """Tests if the matrix representation is unitary.
@@ -63,15 +64,13 @@ class MatrixRepresentation:
         True
 
         """
-        for g in self.group.generate():
+        for g in self._elements:
             if sp.expand(self.map[g].H*self.map[g]) != sp.eye(self.degree):
                 return False
-        else:
-            return True
+        return True
 
 
-def _char_f(G, g, i, j):
-    elems = list(G.generate())
+def _char_f(elems, g, i, j):
     if elems[i]*g == elems[j]:
         return 1
     else:
@@ -99,8 +98,9 @@ def regular_representation(G):
 
     """
     n = G.order()
+    elts = tuple(G.generate())
     mydict = {g: sp.ImmutableMatrix(sp.Matrix(n, n,
                                               lambda i, j:
-                                              _char_f(G, g, i, j)))
-              for g in G.generate()}
+                                              _char_f(elts, g, i, j)))
+              for g in elts}
     return MatrixRepresentation(mydict, G, n)
