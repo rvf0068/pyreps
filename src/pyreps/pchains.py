@@ -1,17 +1,15 @@
 class P_chains:
-    """A class used to do and operate p-chains.
-
-    ...
+    """Class for defining and operating p-chains.
 
     Attributes:
         keys (list): A list with the elements of the p-chains
         values (list): A list with the coefficient for every element in the
-        p-chains
+        p-chain
 
     """
 
     def __init__(self, keys, values):
-        '''Makes a p-chain.
+        '''Defines a p-chain.
 
         Args:
             keys (list): A list with the elements of the p-chains.
@@ -29,25 +27,23 @@ class P_chains:
             A p-chain is constructed by providing a list1 of p-simplex and a
             list2 with their coefficients, i.e.
 
-            >>> P = P_chains([(0,1,2,3)],[1])
-            >>> Q = P_chains([(0,1,2),(0,1,3)],[-1,2])
-            >>> print(P.dic)
+            >>> P = P_chains([(0, 1, 2, 3)], [1])
+            >>> Q = P_chains([(0, 1, 2), (0, 1, 3)], [-1, 2])
+            >>> P
             {(0, 1, 2, 3): 1}
-            >>> print(Q.dic)
+            >>> Q
             {(0, 1, 2): -1, (0, 1, 3): 2}
 
             One important thing to note about P_chains is that the p-simplex
-            must be a immutable data types like a tuple, and to see the
-            P-chains, you need use ``.dic``.
+            must be a immutable data type like a tuple.
 
         '''
         self.keys = keys
         self.values = values
-        self.dic = {}
-        c = 0
-        for x in self.keys:
-            self.dic[x] = self.values[c]
-            c = c+1
+        self.dic = dict(zip(self.keys, self.values))
+
+    def __repr__(self):
+        return str(self.dic)
 
     def __add__(self, other):
         """Sums two p-chains.
@@ -56,16 +52,16 @@ class P_chains:
             other ( __main__.P_chains): Other p-chain.
 
         Returns
-            __main__.P_chains: A new p-chains that is the sum of the two
+            __main__.P_chains: A new p-chain that is the sum of the two
             p-chains given.
 
         Examples:
             To sum two p-chains, use ``+``.
 
             >>> from pyreps.pchains import P_chains
-            >>> P = P_chains([(0,1,2)],[2])
-            >>> Q = P_chains([(0,1,3)],[5])
-            >>> T = P_chains([(0,1,2)],[-2])
+            >>> P = P_chains([(0, 1, 2)], [2])
+            >>> Q = P_chains([(0, 1, 3)], [5])
+            >>> T = P_chains([(0, 1, 2)], [-2])
             >>> R = P + Q
             >>> L = P + T
             >>> R.dic
@@ -86,12 +82,7 @@ class P_chains:
                 D[y] = other.dic[y]
             else:
                 D[y] = D[y] + other.dic[y]
-        w1 = []
-        w2 = []
-        for h in list(D.keys()):
-            w1.append(h)
-            w2.append(D[h])
-        return P_chains(w1, w2)
+        return P_chains(D.keys(), D.values())
 
     def __sub__(self, other):
         """Subtracts two p-chains.
@@ -100,7 +91,7 @@ class P_chains:
             other ( __main__.P_chains): Other p-chain.
 
         Returns
-            __main__.P_chains: A new p-chains that is the substract of the two
+            __main__.P_chains: A new p-chains that is the difference of the two
             p-chains given.
 
         Examples:
@@ -126,12 +117,7 @@ class P_chains:
                 D[y] = -other.dic[y]
             else:
                 D[y] = D[y] - other.dic[y]
-        w1 = []
-        w2 = []
-        for h in list(D.keys()):
-            w1.append(h)
-            w2.append(D[h])
-        return P_chains(w1, w2)
+        return P_chains(D.keys(), D.values())
 
     def __eq__(self, other):
         '''Returns if the two P_chains are equal
@@ -143,13 +129,13 @@ class P_chains:
             bool: The return value. True for success, False otherwise.
 
         Examples:
-            To know if two P_chains are equal use ``==``.
+            To find if two P_chains are equal use ``==``.
 
             >>> from pyreps.pchains import P_chains
-            >>> P = P_chains([(0,1,2),(3,4,5)],[1,1])
-            >>> Q = P_chains([(3,4,5),(0,1,2)],[1,1])
-            >>> R = P_chains([(0,1,2)],[1])
-            >>> L = P_chains([(1,0,2)],[1])
+            >>> P = P_chains([(0, 1, 2), (3, 4, 5)], [1, 1])
+            >>> Q = P_chains([(3, 4, 5), (0, 1, 2)], [1, 1])
+            >>> R = P_chains([(0, 1, 2)], [1])
+            >>> L = P_chains([(1, 0, 2)], [1])
             >>> P == Q
             True
             >>> R == L
@@ -175,10 +161,10 @@ class P_chains:
             To know if two P_chains are equal use ``!=``.
 
             >>> from pyreps.pchains import P_chains
-            >>> P = P_chains([(0,1,2,4)],[1])
-            >>> Q = P_chains([(0,1,4,2)],[-2])
-            >>> R = P_chains([(5,6,7)],[1])
-            >>> L = P_chains([(5,6,7)],[1])
+            >>> P = P_chains([(0, 1, 2, 4)], [1])
+            >>> Q = P_chains([(0, 1, 4, 2)], [-2])
+            >>> R = P_chains([(5, 6, 7)], [1])
+            >>> L = P_chains([(5, 6, 7)], [1])
             >>> P != Q
             True
             >>> R != L
@@ -187,28 +173,26 @@ class P_chains:
         '''
         return not self.__eq__(other)
 
-    def mul_esc(self, esc):
-        '''Returns if the two P_chains are not equal
-
+    def __rmul__(self, other):
+        '''Product for a scalar
         Args:
             other ( __main__.P_chains): Other p-chain.
 
         Returns
-            bool: The return value. True for success, False otherwise.
+            __main__.P_chains: A new p-chain that is the product of the scalar by the 
+            p-chain given.
 
         Examples:
-            To know if two P_chains are equal use ``!=``.
+            To multiply a scalar by a P_chain use ``*``.
 
             >>> from pyreps.pchains import P_chains
-            >>> P = P_chains([(7,8,9),(10,11,12)],[3,2])
-            >>> Q = P_chains([(0,1,4,2,6)],[-5])
-            >>> P.mul_esc(3).dic
+            >>> P = P_chains([(7, 8, 9), (10, 11, 12)], [3, 2])
+            >>> Q = P_chains([(0, 1, 4, 2, 6)], [-5])
+            >>> 3*P
             {(7, 8, 9): 9, (10, 11, 12): 6}
-            >>> Q.mul_esc(-1).dic
+            >>> (-1)*Q
             {(0, 1, 4, 2, 6): 5}
 
         '''
-        aux = P_chains([], [])
-        for x in self.dic:
-            aux.dic[x] = esc*self.dic[x]
-        return aux
+        aux = [other*self.dic[x] for x in self.dic]
+        return P_chains(self.dic.keys(), aux)

@@ -494,7 +494,7 @@ def permutation_in_simplex_test(vec, P):
 
         .. Note:: Then for this example the result is the same.
 
-        And for the second propertie:
+        And for the second property:
 
         >>> from pyreps.pchains import P_chains
         >>> from pyreps.utilities import boundary_op_n
@@ -502,11 +502,11 @@ def permutation_in_simplex_test(vec, P):
         >>> sigma2 = P_chains([(0, 1, 2)], [-1])
         >>> w1 = boundary_op_n(sigma1)
         >>> w2 = boundary_op_n(sigma2)
-        >>> w1.dic
+        >>> w1
         {(1, 2): 1, (0, 2): -1, (0, 1): 1}
-        >>> w2.dic
+        >>> w2
         {(1, 2): -1, (0, 2): 1, (0, 1): -1}
-        >>> w1 == w2.mul_esc(-1) #Multiply by -1.
+        >>> w1 == (-1)*w2 #Multiply by -1.
         True
 
         .. Note:: The simplices differ by the sign, and for this example is true
