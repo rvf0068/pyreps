@@ -20,13 +20,12 @@ def tuple_sorted(a):
         (tuple): The tuple sorted.
 
     Examples:
-        The function ``sorted`` don't sort tuples of tuples, but
-        this function can do it, below is showing examples of
-        both functions:
+        The function ``sorted`` does not sort tuples of tuples, but
+        this function can do it.
 
         >>> from pyreps.utilities import tuple_sorted
-        >>> a1 = ((6,5),(1,0),(3,2))
-        >>> a2 = (((4,2),(1,0),(5,3)),((2,3),(1,0),(6,4)))
+        >>> a1 = ((6, 5), (1, 0), (3, 2))
+        >>> a2 = (((4, 2), (1, 0), (5, 3)), ((2, 3), (1, 0), (6, 4)))
         >>> sorted(a1)
         [(1, 0), (3, 2), (6, 5)]
         >>> tuple_sorted(a1)
@@ -67,11 +66,11 @@ def tuple_permutation(v, P):
         >>> a1 = (0, 1, 2, 3, 4)
         >>> a2 = ((2, 4), (1, 5), (3, 0))
         >>> a3 = (((0, 1), (2, 4), (3, 5)), ((0, 5), (1, 3), (2, 4)))
-        >>> tuple_permutation(a1,Permutation(0, 1, 2))
+        >>> tuple_permutation(a1, Permutation(0, 1, 2))
         (1, 2, 0, 3, 4)
-        >>> tuple_permutation(a2,Permutation(1, 3))
+        >>> tuple_permutation(a2, Permutation(1, 3))
         ((2, 4), (3, 5), (1, 0))
-        >>> tuple_permutation(a3,Permutation(0, 1)(2, 3))
+        >>> tuple_permutation(a3, Permutation(0, 1)(2, 3))
         (((1, 0), (3, 4), (2, 5)), ((1, 5), (0, 2), (3, 4)))
 
         .. Note:: The function return other tuple that represent
@@ -109,8 +108,8 @@ def eq_elements(a, b):
     Raises:
         TypeError: If the tuples don't have the same structure, for
         example:
-        a = ((0,1),(2,3),(5,6))
-        b = ((1,0))
+        a = ((0, 1), (2, 3), (5, 6))
+        b = ((1, 0))
 
     Examples:
         To see if two tuples are equal use ``eq_elements``.
